@@ -8,6 +8,8 @@ import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Locale;
+
 @Service
 public class EventoService {
 
@@ -47,5 +49,10 @@ public class EventoService {
                 })
                 .map(EventoDto::toDto);
 
+    }
+
+    public Flux<EventoDto> obterPorTipo(String tipo) {
+        return repositorio.findByTipo(TipoEvento.valueOf(tipo.toUpperCase(Locale.ROOT)))
+                .map(EventoDto::toDto);
     }
 }

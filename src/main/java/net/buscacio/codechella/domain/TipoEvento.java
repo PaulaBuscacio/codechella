@@ -1,4 +1,4 @@
-package net.buscacio.codechella;
+package net.buscacio.codechella.domain;
 
 public enum TipoEvento {
     SHOW,

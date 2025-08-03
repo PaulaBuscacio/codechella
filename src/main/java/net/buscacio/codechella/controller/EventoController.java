@@ -1,6 +1,7 @@
-package net.buscacio.codechella;
+package net.buscacio.codechella.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import net.buscacio.codechella.dto.EventoDto;
+import net.buscacio.codechella.service.EventoService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;

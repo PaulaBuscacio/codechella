@@ -1,4 +1,4 @@
-package net.buscacio.codechella;
+package net.buscacio.codechella.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;

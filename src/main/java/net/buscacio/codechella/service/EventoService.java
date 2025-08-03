@@ -1,5 +1,9 @@
-package net.buscacio.codechella;
+package net.buscacio.codechella.service;
 
+import net.buscacio.codechella.domain.TipoEvento;
+import net.buscacio.codechella.domain.Evento;
+import net.buscacio.codechella.dto.EventoDto;
+import net.buscacio.codechella.repository.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,15 +20,29 @@ public class EventoService {
     @Autowired
     private EventoRepository repositorio;
 
+    @Autowired
+    private IngressoService ingressoService;
+
     public Flux<EventoDto> obterTodos() {
         return repositorio.findAll().map(EventoDto::toDto);
     }
 
 
-    public Mono<EventoDto> obterPorId(@PathVariable Long id) {
+    public Mono<EventoDto> obterPorId(Long id) {
+        //todo: inserir mens no eventoDto e trasnsformar o eventoDto em um Mono<EventoDto>
         return repositorio.findById(id)
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Id do evento não encontrado.")))
-                .map(EventoDto::toDto);
+                .flatMap(evento ->
+                        ingressoService.obterIngressosDisponiveis(id)
+                                .map(ingressosDisponiveis -> {
+                                    EventoDto dto = EventoDto.toDto(evento);
+                                    return new EventoDto(dto.id(),
+                                            dto.tipo(),
+                                            dto.nome(),
+                                            dto.data(),
+                                            dto.descricao(),
+                                            ingressosDisponiveis);
+                                }));
 
     }
 

@@ -1,5 +1,7 @@
-package net.buscacio.codechella;
+package net.buscacio.codechella.repository;
 
+import net.buscacio.codechella.domain.TipoEvento;
+import net.buscacio.codechella.domain.Evento;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Flux;
 
